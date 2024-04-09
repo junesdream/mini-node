@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mini pets api</title>
+</head>
+<body>
+    <h1 id="sound">Listen Sound of Pets</h1>
+    <input id="name"  type="text">
+    <button onclick="getSound()" >API Request</button>
+        <script>
+            function getSound() {
+    const name = document.getElementById('name').value;
+    fetch(`http://localhost:3000/sound/${name}`)
+    .then((response) => response.json())
+    .then(data => {
+        console.log(data.sound);
+        document.getElementById('sound').innerHTML = data.sound;
+        if(data.img) {
+            const imageElement = document.createElement('img'); 
+            imageElement.src = data.img; 
+            imageElement.style.marginTop = '10px'; 
+            const existingImage = document.querySelector('body > img');
+            if (existingImage) {
+                document.body.removeChild(existingImage);
+            }
+            document.body.appendChild(imageElement); 
+        }
+    });
+}
+
+        </script>
+    
+</body>
+</html>
